@@ -1,11 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-
+import Currency from './App';
 
 ReactDOM.render(
-  <App />,
-  document.getElementById('root')
+    <Currency />,
+    document.getElementById('root')
 );
-
