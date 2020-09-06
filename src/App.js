@@ -30,13 +30,13 @@ export default class Calculator extends Component {
             this.setState({
                 operand1: this.state.value,
                 operator: operator,
-                operand2: this.state.firstOperand ? this.state.operand1 : eval(`${this.state.operand2} ${this.state.operator} ${this.state.operand1}`),
+                operand2: this.state.firstOperand ? this.state.value : eval(`${this.state.operand2} ${this.state.operator} ${this.state.operand1}`),
                 value: '',
                 firstOperand: false,
             },console.log(this.state))
         } else if (operator === "=") {
             this.setState({
-                value: this.state.operand2,
+                value: eval(`${this.state.operand2} ${this.state.operator} ${this.state.value}`) ,
                 operand1: "",
                 operator: "",
                 firstOperand: true,
