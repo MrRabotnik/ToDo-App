@@ -1,0 +1,12 @@
+.single_task{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 30%;
+    border: 1px solid #222;
+    margin: 10px 0;
+}
+
+.del_task{
+    cursor: pointer;
+}
