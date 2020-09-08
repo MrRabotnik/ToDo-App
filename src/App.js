@@ -1,52 +1,61 @@
 import React, { Component } from 'react';
+import SingleTask from './Components/SingleTask';
 import './App.css';
 
-
 export default class ToDo extends Component {
+
     state = {
-        value: "",
-        tasksInState: [],
-        key: 0,
-    };
+        inputValue: "",
+        tasks: [],
+    }
 
-    tasks = []
+    randomKey() {
+        return (Math.random() + 1).toString(32)
+    }
 
-    changeValue = (e) => {
+    randomColor() {
+        let r = Math.floor(Math.random() * 256)
+        let g = Math.floor(Math.random() * 256)
+        let b = Math.floor(Math.random() * 256)
+        return `rgb(${r},${g},${b})`
+    }
+
+    saveValue = (e) => {
         this.setState({
-            value: e.target.value, 
+            inputValue: e.target.value,
         })
     }
 
-    addTask(val) {
-        if(val <= 0) return
-        this.tasks.unshift(
-            <div key={this.state.key} className="single_task">
-                <span key={this.state.key + 1}>{val}</span>
-                <div
-                    className="del_task"
-                    key={this.state.key + 2}
-                    onClick={() => {
-                        
-                    }}
-                    >
-                    &times;
-                </div>
-            </div>
-        )
+    addTask = () => {
+        if (this.state.inputValue === "") return;
+        let randomKeyGen = this.randomKey()
         this.setState({
-            tasksInState: [...this.tasks],
-            value: "",
-            key: this.state.key + 1,
-        })
+            tasks: [<SingleTask randomColor={this.randomColor()} key={randomKeyGen} keyGen={randomKeyGen}  value={this.state.inputValue} />, ...this.state.tasks],
+            inputValue: "",
+        });
     }
 
     render() {
-        let { value, tasksInState} = this.state
+        let { inputValue, tasks } = this.state
         return (
             <React.Fragment>
-                <input onChange={this.changeValue} type="text" value={value}/>
-                <button onClick={() => { this.addTask(value) }}>Add Task</button>
-                {tasksInState}
+                <main>
+                    <h1>ToDo Application</h1>
+                    <div id="inputValue">
+                        <input
+                            onKeyPress={e => {
+                                if (e.which === 13) {
+                                    this.addTask()
+                                }
+                            }}
+                            onChange={this.saveValue}
+                            value={inputValue} />
+                        <button onClick={this.addTask}>Add Task</button>
+                    </div>
+                    <div className="overflow-auto">
+                        {tasks}
+                    </div>
+                </main>
             </React.Fragment>
         );
     }

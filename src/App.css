@@ -1,12 +1,117 @@
-.single_task{
+#root{
+    height: 100vh;
+    width: 100%;
+    background: url("https://media.istockphoto.com/photos/blue-abstract-background-or-texture-picture-id1138395421?k=6&m=1138395421&s=612x612&w=0&h=bJ1SRWujCgg3QWzkGPgaRiArNYohPl7-Wc4p_Fa_cyA=") no-repeat;
+    background-size: 100% 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 30%;
-    border: 1px solid #222;
-    margin: 10px 0;
+    justify-content: center;
 }
 
-.del_task{
+main{
+    padding: 20px;
+    width: 50%;
+    background: rgba(255,255,255,0.7);
+    overflow: auto;
+}   
+
+h1{
+    width: 60%;
+    margin: 10px auto;
+    text-align: center;
+    background-image: linear-gradient(to left, violet, indigo, blue, green, yellow, orange, red);
+    -webkit-background-clip: text;
+    color: transparent;
+    background-color: white;
+}
+
+#inputValue{
+    margin: 30px auto;
+    width: 100%;
+}
+
+#inputValue button{
+    width: 20%;
+    padding: 11px;
     cursor: pointer;
+    background: rgb(47, 159, 47);
+    border: 1px solid #222;
+    color: white;
+
+}
+
+#inputValue input{
+    width: 80%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: 1px solid rgb(47, 159, 47);
+}
+
+.overflow-auto{
+    height: 500px;
+    overflow: auto;
+}
+
+#inputValue input:focus{
+    outline: 1px solid rgb(47, 159, 47);
+    box-shadow: 0 0 5px rgb(47, 159, 47);
+}
+
+.single-task{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-left: 5px;
+    height: 40px;
+    border: 1px solid #222;
+    margin-bottom: 15px;
+    background: white;
+}
+
+.single-task-input{
+    height: 100%;
+    border: 0;
+    outline: none;
+    width: 80%;
+    box-sizing: border-box;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.close-btn{
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 5%;
+    height: 100%;
+    color: rgb(250, 57, 57);
+}
+
+.delete-slide{
+    width: 0;
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.close-btn:hover{
+    width: 20%;
+    transition: 0.7s;
+    background: rgb(208, 47, 47);
+}
+
+.close-btn:hover span{
+    transition: 0.2s;
+    opacity: 0;
+    width: 0;
+}
+
+.close-btn:hover .delete-slide{
+    width: 15%;
+    transition: 0.7s;
+    visibility: visible;
+    opacity: 1;
 }
