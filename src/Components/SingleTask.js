@@ -19,7 +19,7 @@ export default class SingleTask extends Component {
                             value: e.target.value
                         })
                     }} />
-                <div className="close-btn" onClick={() => { }}>
+                <div className="close-btn" onClick={() => {}}>
                     <span>&times;</span>
                     <div className="delete-slide">
                         Delete

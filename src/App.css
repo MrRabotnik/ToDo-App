@@ -5,6 +5,7 @@
     background-size: 100% 100%;
     display: flex;
     justify-content: center;
+    user-select: none;
 }
 
 main{
@@ -12,6 +13,7 @@ main{
     width: 50%;
     background: rgba(255,255,255,0.7);
     overflow: auto;
+    max-width: 900px;
 }   
 
 h1{
@@ -27,6 +29,7 @@ h1{
 #inputValue{
     margin: 30px auto;
     width: 100%;
+    max-width: 700px;
 }
 
 #inputValue button{
@@ -36,7 +39,10 @@ h1{
     background: rgb(47, 159, 47);
     border: 1px solid #222;
     color: white;
+}
 
+#inputValue button:hover{
+    background: rgb(26, 108, 26);
 }
 
 #inputValue input{
@@ -47,8 +53,10 @@ h1{
 }
 
 .overflow-auto{
-    height: 500px;
+    height: calc(100vh - 200px);
     overflow: auto;
+    max-width: 700px;
+    margin: auto;
 }
 
 #inputValue input:focus{
@@ -65,6 +73,7 @@ h1{
     border: 1px solid #222;
     margin-bottom: 15px;
     background: white;
+    overflow: hidden;
 }
 
 .single-task-input{
@@ -74,7 +83,6 @@ h1{
     width: 80%;
     box-sizing: border-box;
     text-overflow: ellipsis;
-    overflow: hidden;
     white-space: nowrap;
 }
 
@@ -114,4 +122,30 @@ h1{
     transition: 0.7s;
     visibility: visible;
     opacity: 1;
+}
+
+@media only screen and (max-width: 905px){
+    main{
+        width: 80%;
+    }  
+}
+
+
+@media only screen and (max-width: 570px){
+    main{
+        width: 100%;
+        background: rgba(255,255,255,0.2);
+    }  
+    h1{
+        width: 80%;
+    }
+    #inputValue button{
+        font-size: 2.9vw;
+        padding: 11px 5px;
+    }
+
+    #inputValue input{
+        font-size: 2.9vw;
+        padding: 11px 5px;
+    }
 }
