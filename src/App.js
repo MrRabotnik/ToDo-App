@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faList } from '@fortawesome/free-solid-svg-icons';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
+import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import './App.css';
 
 export default class ToDo extends Component {
@@ -15,17 +16,11 @@ export default class ToDo extends Component {
         selectTasksColor: "black",
         border: "",
         selecting: false,
+        doneColor: "color_orange"
     }
 
     randomKey() {
         return (Math.random() + 1).toString(32).slice(2)
-    }
-
-    randomColor() {
-        let r = Math.floor(Math.random() * 256)
-        let g = Math.floor(Math.random() * 256)
-        let b = Math.floor(Math.random() * 256)
-        return `rgb(${r},${g},${b})`
     }
 
     saveValue = (e) => {
@@ -41,18 +36,20 @@ export default class ToDo extends Component {
         this.setState({
             tasks: [
                 <div key={randomKeyGen} className="single-task">
+                    <div className="done_overlay"><span></span></div>
+                    <FontAwesomeIcon className="color_orange" icon={faCheckCircle} onClick={() => { this.itsDone(randomKeyGen) }} />
                     <input
-                        className={taskClasses} 
+                        className={taskClasses}
                         value={this.state.inputValue}
                         onChange={() => { }}
-                        />
+                    />
                     <div className="close-btn" onClick={() => { this.removeTask(randomKeyGen) }}>
                         <span>&times;</span>
                         <div className="delete-slide">
                             Delete
+                </div>
                     </div>
-                    </div>
-                </div>, ...this.state.tasks],
+                </div> , ...this.state.tasks],
             inputValue: "",
         });
     }
@@ -69,10 +66,13 @@ export default class ToDo extends Component {
         let divClasses = `single-task ${this.state.border ? "" : "border_blue"}`
         let newTasks = this.state.tasks.map(i => {
             let randomKeyGen = this.randomKey()
+            let overlayClasses = `done_overlay ${i.props.children[0].props.className === "done_overlay display_flex" ? "display_flex" : ""}`
             return <div key={randomKeyGen} className={divClasses} onClick={() => { this.selectingTasks(randomKeyGen) }}>
+                        <div className={overlayClasses}><span></span></div>
+                        <FontAwesomeIcon className={i.props.children[1].props.className === "color_orange" ? "color_orange" : "color_green"} icon={faCheckCircle} onClick={() => { this.itsDone(randomKeyGen) }} />
                         <input
                             className={taskClasses}
-                            value={i.props.children[0].props.value}
+                            value={i.props.children[2].props.value}
                             onChange={e => { console.log(e.target.value) }}
                         />
                         <div className="close-btn" onClick={() => { this.removeTask(randomKeyGen) }}>
@@ -93,15 +93,18 @@ export default class ToDo extends Component {
         })
     }
 
-    deSelectingTasksStart = () => {
+    deSelectingTasksStart = (condition = true) => {
         let taskClasses = `single-task-input`
         let divClasses = `single-task`
         let newTasks = this.state.tasks.map(i => {
-            let randomKeyGen = this.randomKey()
+        let overlayClasses = `done_overlay ${i.props.children[0].props.className === "done_overlay display_flex" ? "display_flex" : ""}`
+        let randomKeyGen = this.randomKey()
             return <div key={randomKeyGen} className={divClasses} onClick={() => { this.selectingTasks(randomKeyGen) }}>
+                <div className={overlayClasses}><span></span></div>
+                <FontAwesomeIcon className={i.props.children[1].props.className === "color_orange" ? "color_orange" : "color_green"} icon={faCheckCircle} onClick={() => { this.itsDone(randomKeyGen) }} />
                 <input
                     className={taskClasses}
-                    value={i.props.children[0].props.value}
+                    value={i.props.children[2].props.value}
                     onChange={e => { console.log(e.target.value) }}
                 />
                 <div className="close-btn" onClick={() => { this.removeTask(randomKeyGen) }}>
@@ -119,7 +122,7 @@ export default class ToDo extends Component {
             tasks: [...newTasks],
             openWarningPopUp: "none",
             selectTasksColor: "black",
-            selecting: !this.state.selecting
+            selecting: condition ? !this.state.selecting : false,
         })
     }
 
@@ -130,12 +133,15 @@ export default class ToDo extends Component {
             if (i.key !== key) {
                 return i
             } else {
+                let overlayClasses = `done_overlay ${i.props.children[0].props.className === "done_overlay display_flex" ? "display_flex" : ""}`
                 let randomKeyGen = this.randomKey()
                 let divClasses = `single-task ${i.props.className === "single-task border_red" ? "border_blue" : "border_red"}`
                 return <div key={randomKeyGen} className={divClasses} onClick={() => { this.selectingTasks(randomKeyGen) }}>
+                            <div className={overlayClasses}><span></span></div>
+                            <FontAwesomeIcon className={i.props.children[1].props.className === "color_orange" ? "color_orange" : "color_green"} icon={faCheckCircle} onClick={() => { this.itsDone(randomKeyGen) }} />        
                             <input
                                 className={taskClasses}
-                                value={i.props.children[0].props.value}
+                                value={i.props.children[2].props.value}
                                 onChange={e => { console.log(e.target.value) }}
                             />
                             <div className="close-btn" onClick={() => { this.removeTask(randomKeyGen) }}>
@@ -163,6 +169,48 @@ export default class ToDo extends Component {
         this.setState({
             tasks: [...this.state.tasks.filter(i => i.props.className !== "single-task border_red")],
             openWarningPopUp: "none",
+            selecting: this.state.tasks.length === 0 ? !this.state.selecting : this.state.selecting,
+            trashDisplay: this.state.tasks.length === 0 ? "display_none" : "",
+            cursorPointer: "",
+            border: "",
+            selectTasksColor: this.state.tasks.length === 0 ? "black" : "white",
+        }, () => {
+            this.setState({
+                selecting: this.state.tasks.length === 0 ? !this.state.selecting : this.state.selecting,
+                trashDisplay: this.state.tasks.length === 0 ? "display_none" : "",
+                selectTasksColor: this.state.tasks.length === 0 ? "black" : "white",
+            })
+        })
+    }
+
+    itsDone = (key) => {
+        let taskClasses = `single-task-input`
+        let newTasks = this.state.tasks.map(i => {
+            if (i.key !== key) {
+                return i
+            } else {
+                let randomKeyGen = this.randomKey()
+                let overlayClasses = `done_overlay ${i.props.children[0].props.className === "done_overlay display_flex"? "" : "display_flex"}`
+                return <div key={randomKeyGen} className="single-task">
+                    <div className={overlayClasses}><span></span></div>
+                    <FontAwesomeIcon className={i.props.children[1].props.className === "color_orange" ? "color_green" : "color_orange" } icon={faCheckCircle} onClick={() => { this.itsDone(randomKeyGen) }} />
+                            <input
+                                className={taskClasses}
+                                value={i.props.children[2].props.value}
+                                onChange={() => { }}
+                            />
+                            <div className="close-btn" onClick={() => { this.removeTask(randomKeyGen) }}>
+                                <span>&times;</span>
+                                <div className="delete-slide">
+                                    Delete
+                                </div>
+                            </div>  
+                        </div>
+            }
+        })
+        this.setState({
+            tasks: [...newTasks],
+            doneColor: this.state.doneColor === "color_orange" ? "color_green" : "color_orange",
         })
     }
 
@@ -182,7 +230,8 @@ export default class ToDo extends Component {
                     <input
                         onKeyPress={e => {
                             if (e.key === "Enter") {
-                                this.addTask()
+                                this.addTask();
+                                setTimeout(() => { this.deSelectingTasksStart(false) }, 50)
                             }
                         }}
                         onChange={this.saveValue}

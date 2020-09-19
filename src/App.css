@@ -12,6 +12,10 @@
     display: none !important;
 }
 
+.display_flex{
+    display: flex !important;
+}
+
 .border_blue{
     border: 2px solid rgb(14, 151, 255) !important;
     box-shadow: none !important;
@@ -20,6 +24,14 @@
 .border_red{
     border: 2px solid rgb(183, 33, 33) !important;
     box-shadow: 0 0 7px rgb(183, 33, 33) !important;
+}
+
+.color_green{
+    color: green !important;
+}
+
+.color_orange{
+    color: orange;
 }
 
 .cursor_pointer{
@@ -38,6 +50,8 @@
     align-items: center;
     justify-content: space-evenly;
     flex-direction: column;
+    z-index: 5;
+    border: 1px solid black;
 }
 
 .warning_pop_up span{
@@ -74,6 +88,24 @@
     color: red !important;
     transform: scale(1.2);
     cursor: pointer;
+}
+
+.done_overlay{
+    position: absolute;
+    left: -5px;
+    width: 105%;
+    height: 100%;
+    background: rgba(205, 205, 205, 0.531);
+    align-items: center;
+    display: none;
+    z-index: 1;
+}
+
+.done_overlay > span{
+    width: 85%;
+    margin-left: 30px;
+    height: 1px;
+    background: black;
 }
 
 main{
@@ -124,7 +156,7 @@ h1{
 .overflow-auto{
     height: calc(100vh - 205px);
     overflow: auto;
-    padding: 5px;
+    padding: 3px;
     max-width: 700px;
     margin: auto;
 }
@@ -156,6 +188,7 @@ h1{
 }
 
 .single-task{
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -166,6 +199,11 @@ h1{
     margin-bottom: 15px;
     background: white;
     overflow: hidden;
+}
+
+.single-task > svg{
+    cursor: pointer;
+    z-index: 2;
 }
 
 .single-task-input{
@@ -186,6 +224,7 @@ h1{
     width: 5%;
     height: 100%;
     color: rgb(250, 57, 57);
+    z-index: 2;
 }
 
 .delete-slide{
