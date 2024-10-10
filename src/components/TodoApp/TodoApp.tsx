@@ -10,7 +10,7 @@ type Todo = {
 };
 
 const TodoApp: React.FC = () => {
-    const [todos, setTodos] = useState<Todo[]>([]);
+    const [todos, setTodos] = useState<Todo[]>([{ id: 1, text: "Test Task", completed: false }]);
     const [filter, setFilter] = useState<"all" | "active" | "completed">("all");
     const [newTodo, setNewTodo] = useState("");
 
@@ -22,7 +22,9 @@ const TodoApp: React.FC = () => {
     };
 
     const toggleTodo = (id: number) => {
-        setTodos(todos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo)));
+        setTodos((prevTodos) =>
+            prevTodos.map((todo) => (todo.id === id ? { ...todo, completed: !todo.completed } : todo))
+        );
     };
 
     const clearCompleted = () => {
