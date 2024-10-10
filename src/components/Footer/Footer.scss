@@ -1,0 +1,17 @@
+.footer {
+    display: flex;
+    justify-content: space-between;
+    color: #777;
+
+    & > div {
+        display: flex;
+        align-items: center;
+    }
+
+    button {
+        background: none;
+        border: none;
+        color: #777;
+        cursor: pointer;
+    }
+}
