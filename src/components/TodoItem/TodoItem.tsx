@@ -1,5 +1,6 @@
 import React from "react";
 import "./TodoItem.scss";
+import Checkmark from "../Checkmark/Checkmark";
 
 type TodoItemProps = {
     todo: { id: number; text: string; completed: boolean };
@@ -9,10 +10,9 @@ type TodoItemProps = {
 const TodoItem: React.FC<TodoItemProps> = ({ todo, toggleTodo }) => {
     return (
         <div className="todo-item">
-            <input
-                type="checkbox"
+            <Checkmark
+                click={() => toggleTodo(todo.id)}
                 checked={todo.completed}
-                onChange={() => toggleTodo(todo.id)}
             />
             <span className={todo.completed ? "completed" : ""}>{todo.text}</span>
         </div>
