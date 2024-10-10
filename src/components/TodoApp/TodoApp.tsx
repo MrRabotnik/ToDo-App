@@ -43,6 +43,7 @@ const TodoApp: React.FC = () => {
             <input
                 type="text"
                 placeholder="What needs to be done?"
+                aria-label="What needs to be done?"
                 value={newTodo}
                 onChange={(e) => setNewTodo(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && addTodo()}
